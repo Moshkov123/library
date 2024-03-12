@@ -15,11 +15,12 @@ return new class extends Migration
             $table->foreignId('book_id')->constrained('books');
             $table->string('qr');
             $table->string('year');
+            $table->string('photo')->nullable();
             $table->string('publish');
             $table->string('ISBN');
             $table->boolean('condition');
             $table->boolean('booking');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->default('0');
             $table->timestamps();
         });
     }

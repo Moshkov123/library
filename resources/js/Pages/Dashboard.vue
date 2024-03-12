@@ -2,10 +2,16 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
+
+const hasQrcode = (qrcodes, bookId) => {
+  return qrcodes.some((qrcode) => qrcode.book_id === bookId);
+};
+
+const getQrcode = (qrcodes, bookId) => {
+  return qrcodes.find((qrcode) => qrcode.book_id === bookId);
+};
 </script>
-
 <template>
-
   <Head title="Dashboard" />
   <AuthenticatedLayout>
     <template #header>
@@ -17,21 +23,25 @@ import { Link } from '@inertiajs/vue3';
           <div>
             <h2>Books</h2>
             <div class="card-group">
-  <div v-for="book in books" :key="book.id" class="card">
-    <div class="card-body">
-      <Link :href="`/books/${book.id}`" class="card mb-3" v-for="book in books" :key="book.id">
-        <h5 class="card-title">{{ book.title }}</h5>
-        <p class="card-text">by {{ book.author }}</p>
-      </Link>
-    </div>
-  </div>
-</div>
+              <div v-for="book in books" :key="book.id" class="card">
+                <div class="card-body">
+                  <Link :href="`/books/${book.id}`" class="card mb-3">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                  </Link>
+                  <p class="card-text">by {{ book.author }}</p>
+                  <img v-if="hasQrcode(qrcodes, book.id)" :src="`/storage/${getQrcode(qrcodes, book.id).photo}`" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </AuthenticatedLayout>
 </template>
+
+
+
 
 <script>
 import { defineComponent } from 'vue';
@@ -41,9 +51,7 @@ export default defineComponent({
   components: { Link },
   props: {
     books: Array,
-  },
-  setup() {
-    return {};
+    qrcodes: Array,
   },
 });
 </script>
