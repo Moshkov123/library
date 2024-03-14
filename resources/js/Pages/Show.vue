@@ -1,4 +1,11 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+
+</script>
 <template>
+	  <Head title="Show" />
+  <AuthenticatedLayout>
 	<div class="container col-6">
 		<div class="row justify-content-center p-4">
 			<div
@@ -13,6 +20,7 @@
 			</div>
 		</div>
 	</div>
+</AuthenticatedLayout>
 </template>
 
 <script >

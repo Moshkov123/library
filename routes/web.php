@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QrcodeController;
 use App\Http\Middleware\Admin;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -20,10 +21,15 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified','employee'])->group(function () {
-    Route::redirect('/scanner', 301)->name('role');
+    Route::redirect('/scanner', 301)->name('scanner');
     Route::resource('scanner', ScannerController::class)
     ->only(['index']);
-    
+    Route::redirect('/qrcode', 301)->name('qrcode');
+    Route::resource('qrcode', QrcodeController::class)
+    ->only(['index']);
+    Route::redirect('/dashboard', '/books', 301)->name('dashboard');
+    Route::resource('books', BookController::class)
+    ->only(['create', 'store']);
 });
 Route::middleware(['auth', 'verified','admin'])->group(function () {
     Route::redirect('/role', 301)->name('role');
@@ -35,7 +41,7 @@ Route::middleware(['auth', 'verified','admin'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
     Route::resource('books', BookController::class)
-    ->only(['index', 'show', 'create', 'store']);
+    ->only(['index', 'show']);
     
 });
 

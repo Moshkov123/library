@@ -6,9 +6,6 @@ import { Head } from '@inertiajs/vue3';
 <template>
   <Head title="Scanner" />
   <AuthenticatedLayout>
-    <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">User Table</h2>
-    </template>
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -19,15 +16,8 @@ import { Head } from '@inertiajs/vue3';
     <p>{{ decodedString }}</p>
     <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
   </div>
-  <h2>QR</h2>
-  <div>
-    <form>
-      <input v-model="QRValue" placeholder="Введите текст">
-    <button @click="generateQRCode">Создать QR-код</button>
-    <img :src="qrCode" alt="QR-код">
-    </form>
-    <qrcode-vue :value="QRValue" :level="level" :render-as="renderAs" />
-  </div>
+  
+
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ class Qrcode extends Model
 {
     use HasFactory;
     protected $fillable = ['publish', 'book_id', 'qr', 'year', 'photo', 'ISBN', 'condition', 'booking', 'user_id'];
-    public function Book()
+    public function book()
     {
         return $this->belongsTo(Book::class);
     }

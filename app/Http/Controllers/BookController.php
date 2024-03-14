@@ -39,7 +39,7 @@ class BookController extends Controller
         }
     
         $book = Book::query()->create($bookData);
-        $book2Data = array_merge($bookData2, ['book_id' => $book->id,'user_id' => 1, 'qr' =>  'ISBN', 'condition' => true, 'booking'=>true]); // Добавление 'book_id' и 'qr' в данные для создания Qrcode
+        $book2Data = array_merge($bookData2, ['book_id' => $book->id,'user_id' => 1, 'condition' => true, 'booking'=>true]); // Добавление 'book_id' и 'qr' в данные для создания Qrcode
        Qrcode::query()->create($book2Data);
     
         return redirect()->route('books.show', $book);

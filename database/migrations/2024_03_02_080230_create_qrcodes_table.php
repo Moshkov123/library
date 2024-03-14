@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('qrcodes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('book_id')->constrained('books');
-            $table->string('qr');
+          
             $table->string('year');
             $table->string('photo')->nullable();
             $table->string('publish');
