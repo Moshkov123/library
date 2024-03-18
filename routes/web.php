@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrcodeController;
 use App\Http\Middleware\Admin;
@@ -10,6 +11,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Middleware\Employee;
+use Illuminate\Http\Request;
+ 
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,9 +27,15 @@ Route::middleware(['auth', 'verified','employee'])->group(function () {
     Route::redirect('/scanner', 301)->name('scanner');
     Route::resource('scanner', ScannerController::class)
     ->only(['index']);
+
     Route::redirect('/qrcode', 301)->name('qrcode');
     Route::resource('qrcode', QrcodeController::class)
     ->only(['index']);
+
+    Route::redirect('/generate', 301)->name('generate');
+    Route::resource('generate', QrcodeController::class)
+    ->only(['index']);
+
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
     Route::resource('books', BookController::class)
     ->only(['create', 'store']);

@@ -15,6 +15,7 @@ import { Head } from '@inertiajs/vue3';
   <p><strong>Author:</strong> {{ book.author }}</p>
     <p><strong>ISBN</strong> {{ qrcode.ISBN}}</p>
     <p><strong>Дата издания</strong> {{ qrcode.year}}</p>
+    
     <qrcode-vue :value="qrcode.ISBN" :level="level" :render-as="renderAs" />
   </template>
 </div>
