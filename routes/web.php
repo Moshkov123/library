@@ -32,9 +32,7 @@ Route::middleware(['auth', 'verified','employee'])->group(function () {
     Route::resource('qrcode', QrcodeController::class)
     ->only(['index']);
 
-    Route::redirect('/generate', 301)->name('generate');
-    Route::resource('generate', QrcodeController::class)
-    ->only(['index']);
+
 
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
     Route::resource('books', BookController::class)
