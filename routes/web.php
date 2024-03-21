@@ -38,11 +38,12 @@ Route::middleware(['auth', 'verified','employee'])->group(function () {
     Route::resource('books', BookController::class)
     ->only(['create', 'store']);
 });
-Route::middleware(['auth', 'verified','admin'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::redirect('/role', 301)->name('role');
-    Route::resource('role', AdminController::class)
-    ->only(['index']);
-    
+    Route::resource('role', AdminController::class)->only(['index', 'destroy']);
+
+    Route::get('/role/edit/{id}', [AdminController::class, 'edit']);
+Route::put('/role/update/{id}', [ AdminController::class, 'update']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
