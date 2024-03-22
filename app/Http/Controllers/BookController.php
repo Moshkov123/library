@@ -32,7 +32,9 @@ class BookController extends Controller
     {
         $bookData = $request->only(['title', 'author', 'genre', 'age', 'annotation', 'quantity']);
         $bookData2 = $request->only(['ISBN', 'publish', 'photo', 'year']);
-    
+
+        $foundBook = Book::where('title',$request-> title)->where('author', $request->author)->first();
+    if(!$foundBook){
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('photos', 'public');
             $bookData2['photo'] = $photoPath;
@@ -41,6 +43,17 @@ class BookController extends Controller
         $book = Book::query()->create($bookData);
         $book2Data = array_merge($bookData2, ['book_id' => $book->id,'user_id' => 1, 'condition' => true, 'booking'=>true]); // Добавление 'book_id' и 'qr' в данные для создания Qrcode
        Qrcode::query()->create($book2Data);
+    }else{
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public');
+            $bookData2['photo'] = $photoPath;
+        }
+    
+        $book = Book::where($bookData)->first();
+        $book2Data = array_merge($bookData2, ['book_id' => $book->id,'user_id' => 1, 'condition' => true, 'booking'=>true]); // Добавление 'book_id' и 'qr' в данные для создания Qrcode
+       Qrcode::query()->create($book2Data);
+    }
+       
     
         return redirect()->route('books.show', $book);
     }
