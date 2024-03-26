@@ -10,6 +10,6 @@ class ScannerController extends Controller
     public function index()
     {
         
-        return Inertia::render('Scanner');
+        return Inertia::render('Employee/Scanner');
     }
 }

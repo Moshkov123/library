@@ -13,6 +13,6 @@ class QrcodeController extends Controller
     {
         $books=Book::all();
         $qrcodes = Qrcode::all();
-        return Inertia::render('Qrcode',['qrcodes'=>$qrcodes,'books'=>  $books]);
+        return Inertia::render('Employee/Qrcode',['qrcodes'=>$qrcodes,'books'=>  $books]);
     }
 }

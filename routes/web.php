@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrcodeController;
 use App\Http\Middleware\Admin;
@@ -12,7 +11,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Middleware\Employee;
 use Illuminate\Http\Request;
- 
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -23,34 +22,29 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth', 'verified','employee'])->group(function () {
-    Route::redirect('/scanner', 301)->name('scanner');
+Route::middleware(['auth', 'verified', 'employee'])->group(function () {
     Route::resource('scanner', ScannerController::class)
-    ->only(['index']);
+        ->only(['index']);
 
-    Route::redirect('/qrcode', 301)->name('qrcode');
     Route::resource('qrcode', QrcodeController::class)
-    ->only(['index']);
-
-
+        ->only(['index']);
 
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
     Route::resource('books', BookController::class)
-    ->only(['create', 'store']);
+        ->only(['create', 'store']);
 });
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-    Route::redirect('/role', 301)->name('role');
     Route::resource('role', AdminController::class)->only(['index', 'destroy']);
 
     Route::get('/role/edit/{id}', [AdminController::class, 'edit']);
-Route::put('/role/update/{id}', [ AdminController::class, 'update']);
+    Route::put('/role/update/{id}', [AdminController::class, 'update']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
     Route::resource('books', BookController::class)
-    ->only(['index', 'show']);
-    
+        ->only(['index', 'show']);
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -59,4 +53,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

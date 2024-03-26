@@ -14,5 +14,9 @@ class Book extends Model
     {
         return $this->hasMany(Qrcode::class);
     }
+    public function Author()
+    {
+        return $this->belongsTo(Author::class);
+    }
     
 }
