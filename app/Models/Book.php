@@ -9,7 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['author', 'genre', 'title', 'age', 'annotation', 'quantity'];
+    protected $fillable = ['author_id', 'title', 'age', 'annotation', 'quantity'];
     public function qrcodes()
     {
         return $this->hasMany(Qrcode::class);

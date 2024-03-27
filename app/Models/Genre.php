@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Genre extends Model
 {
     use HasFactory;
+    protected $fillable =['genre'];
     public function Genre_Book()
     {
         return $this->belongsTo(Genre::class);

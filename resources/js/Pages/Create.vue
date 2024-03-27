@@ -2,7 +2,8 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
+import TextTextarea from '@/Components/TextTextarea.vue';
+import TextInput from '@/Components/TextInput.vue';
 const form = useForm({
 	name: '',
     patronymic: '',
@@ -26,41 +27,126 @@ const form = useForm({
 		<form class="max-w-md mx-auto" enctype="multipart/form-data">
 			<div class="mb-5">
 				<button @click.prevent="toggleComponent">Нажми меня</button>
-				<Author :form="form" v-if="currentComponent === 'Author'"></Author>
-<ReadyAuthors :form="form" v-if="currentComponent === 'ReadyAuthors'"></ReadyAuthors>
+				<div v-if="currentComponent === 'Author'">
+					<div class="mb-3">
+            <label for="name">Имя</label>
+            <TextInput
+            id="name" v-model="form.name"
+				type="text"
+                    class="mt-1 block w-full"
+                    required
+                    />
+        </div>
+        <div class="mb-3">
+            <label for="surname">Фамилия</label>
+            <TextInput
+            id="surname" v-model="form.surname" 
+				type="text"
+                    class="mt-1 block w-full"
+                    required
+                    />
+        </div>
+        <div class="mb-3">
+            <label for="patronymic">Отчество</label>
+            <TextInput
+            id="patronymic" v-model="form.patronymic"
+				type="text"
+                    class="mt-1 block w-full"
+                    required
+                    />
+        </div></div>
+<div  v-if="currentComponent === 'ReadyAuthors'">
+	<div>
+      <TextInput
+      v-model="searchText" 
+				type="text"
+                    class="mt-1 block w-full"
+                   />
+      <ul>
+        <li v-for="author in filteredAuthors" :key="author.id">{{ author.name }}</li>
+      </ul>
+    </div></div>
 
 			</div>
 			<div class="mb-5">
 				<label for="genre" class="form-label">Жанр</label>
-				<input type="text" class="form-control" v-model="form.genre" id="genre" />
+				<TextInput
+			id="genre"
+			type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.genre"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="title" class="form-label">Название</label>
-				<input type="text" class="form-control" v-model="form.title" id="title" />
+				<TextInput
+				id="title"
+			type="text"
+                    class="mt-1 block w-full"
+					v-model="form.title"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="age" class="form-label">Возраст</label>
-				<input type="number" class="form-control" v-model="form.age" id="age" />
+				<TextInput
+				id="age" 
+				type="number"
+                    class="mt-1 block w-full"
+					v-model="form.age"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="annotation" class="form-label">Аннотация</label>
-				<textarea class="form-control" v-model="form.annotation" id="annotation" rows="3"></textarea>
+				<TextTextarea
+				id="annotation"
+			type="text"
+                    class="mt-1 block w-full"
+					v-model="form.annotation"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="quantity" class="form-label">Количество</label>
-				<input type="number" class="form-control" v-model="form.quantity" id="quantity" />
+				<TextInput
+				id="quantity"
+				type="number"
+                    class="mt-1 block w-full"
+					v-model="form.quantity"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="ISBN" class="form-label">ISBN</label>
-				<input type="number" class="form-control" v-model="form.ISBN" id="ISBN" />
+				<TextInput
+			
+				type="number"
+                    class="mt-1 block w-full"
+					v-model="form.ISBN" id="ISBN"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="publish" class="form-label"> издатель</label>
-				<input type="text" class="form-control" v-model="form.publish" id="publish" />
+				<TextInput
+				 
+				type="text"
+                    class="mt-1 block w-full"
+					v-model="form.publish" id="publish"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="year" class="form-label">год издания</label>
-				<input type="text" class="form-control" v-model="form.year" id="year" />
+				
+				<TextInput
+				v-model="form.year" id="year" 
+				type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus/>
 			</div>
 			<div class="mb-5">
 				<label for="photo" class="form-label">Фотография</label>
@@ -73,9 +159,7 @@ const form = useForm({
 	</AuthenticatedLayout>
 </template>
 <script>
-import ReadyAuthors from "@/Components/ReadyAuthors.vue"
-import Author from "@/Components/Author.vue"
-import author from '@/Layouts/AuthenticatedLayout.vue';
+
 
 export default {
 	data() {
