@@ -8,6 +8,7 @@ use App\Models\Genre;
 use App\Models\Genre_Book;
 use App\Models\Qrcode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,12 +23,32 @@ class BookController extends Controller
     }
 
 
-    public function show(Book $book)
+    public function show(Book $book, Qrcode $qrcode)
     {
 
-        return Inertia::render('Show', ['book' => $book]);
+        return Inertia::render('Show', ['book' => $book, 'qrcode'=>$qrcode]);
     }
-
+    public function reserve(Book $book)
+    {
+        $userId = Auth::id();
+        
+        // Retrieve the qrcode associated with the given book
+        $qrcode = Qrcode::where('book_id', $book->id)->first();
+    
+        if ($qrcode) {
+            // Update the retrieved qrcode entry for the booked book
+            $qrcode->update([
+                'booking' => false, // Set booking to false
+                'user_id' => $userId, // Update user_id to the current user's ID
+            ]);
+    
+            // Additional logic if needed
+    
+           
+        } 
+        return redirect()->back()->with('success', 'Book reserved successfully.');
+    }
+    
     public function create()
     {
         $authors = Author::all();

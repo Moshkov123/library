@@ -42,10 +42,10 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
-    Route::resource('books', BookController::class)
-        ->only(['index', 'show']);
-
+    Route::resource('books', BookController::class)->only(['index', 'show']);
+    Route::post('books/{book}/reserve', [BookController::class, 'reserve'])->name('books.reserve');
 });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

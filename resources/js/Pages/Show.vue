@@ -1,37 +1,33 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-
-</script>
 <template>
-	  <Head title="Show" />
-  <AuthenticatedLayout>
-	<div class="container col-6">
+	<AuthenticatedLayout>
+	  <div class="container col-6">
 		<div class="row justify-content-center p-4">
-			<div
-				href="#"
-				class="card mb-3"
-			>
-				<div class="card-body">
-					<h5 class="card-title">{{ book.title }}</h5>
-					<p class="card-text">{{ book.author }}</p>
-					<p class="card-text">{{ book.annotation}}</p>
-				</div>
+		  <div class="card mb-3">
+			<div class="card-body">
+			  <h5 class="card-title">{{ book.title }}</h5>
+			  <p class="card-text">{{ qrcode.ISBN }}</p>
+			  <p class="card-text">{{ book.annotation }}</p>
+			  <button @click="reserveBook">Reserve</button>
 			</div>
+		  </div>
 		</div>
-	</div>
-</AuthenticatedLayout>
-</template>
-
-<script >
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-	props: {
-  book: Object,
-},
-  setup() {
-    return {};
-  },
-});
-</script>
+	  </div>
+	</AuthenticatedLayout>
+  </template>
+ <script>
+ import { defineComponent } from 'vue';
+ import { Inertia } from '@inertiajs/inertia';
+ 
+ export default defineComponent({
+   props: {
+	 book: Object,
+	 qrcode: Object,
+   },
+   methods: {
+	 reserveBook() {
+	   Inertia.post(`/books/${this.book.id}/reserve`);
+	 },
+   },
+ });
+ </script>
+  
