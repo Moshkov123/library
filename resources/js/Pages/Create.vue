@@ -1,30 +1,36 @@
 <script setup>
-import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TextTextarea from '@/Components/TextTextarea.vue';
 import TextInput from '@/Components/TextInput.vue';
+
 const form = useForm({
-	name: '',
-    patronymic: '',
-    surname: '',
-    author: '',
-	genre: '',
-	title: '',
-	age: null,
-	annotation: '',
-	quantity: null,
-	year: '',
-	ISBN: null,
-	photo: null,
-	publish: '',
+  name: '',
+  patronymic: '',
+  surname: '',
+  author: '',
+  genre: '',
+  title: '',
+  age: null,
+  annotation: '',
+  quantity: null,
+  year: '',
+  ISBN: null,
+  photo: null,
+  publish: ''
 });
-
-
+let currentComponent = 'Author'
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  form.photo = file; // Update the photo field in the form data
+};
+const toggleComponent = () => {
+	currentComponent = currentComponent === 'Author' ? 'ReadyAuthors' : 'Author';
+};
 </script>
 <template>
 	<AuthenticatedLayout>
-		<form class="max-w-md mx-auto" enctype="multipart/form-data">
+	<form class="max-w-md mx-auto" enctype="multipart/form-data">
 			<div class="mb-5">
 				<button @click.prevent="toggleComponent">Нажми меня</button>
 				<div v-if="currentComponent === 'Author'">
@@ -34,8 +40,7 @@ const form = useForm({
             id="name" v-model="form.name"
 				type="text"
                     class="mt-1 block w-full"
-                    required
-                    />
+                    required />
         </div>
         <div class="mb-3">
             <label for="surname">Фамилия</label>
@@ -66,7 +71,6 @@ const form = useForm({
         <li v-for="author in filteredAuthors" :key="author.id">{{ author.name }}</li>
       </ul>
     </div></div>
-
 			</div>
 			<div class="mb-5">
 				<label for="genre" class="form-label">Жанр</label>
@@ -149,28 +153,12 @@ const form = useForm({
                     autofocus/>
 			</div>
 			<div class="mb-5">
-				<label for="photo" class="form-label">Фотография</label>
-				<input type="file" class="form-control" id="photo" name="photo" v-on:change="handleFileChange">
-			</div>
-
+    <label for="photo" class="form-label">Фотография</label>
+    <input type="file" class="form-control" id="photo" name="photo" @change="handleFileChange">
+  </div>
 			<button class="btn btn-primary" @click="form.post(route('books.store'))"
 				:disabled="form.processing">Добавить</button>
 		</form>
 	</AuthenticatedLayout>
 </template>
-<script>
 
-
-export default {
-	data() {
-		return {
-			currentComponent: 'Author'
-		};
-	},
-	methods: {
-		toggleComponent() {
-			this.currentComponent = this.currentComponent === 'Author' ? 'ReadyAuthors' : 'Author';
-		}
-	}
-};
-</script>
