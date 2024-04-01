@@ -2,8 +2,8 @@
 /node_modules
 /public/build
 /public/hot
-
-
+public/storage/photos/
+/storage/*.key
 /vendor
 .env
 .env.backup
