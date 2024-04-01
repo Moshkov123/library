@@ -44,7 +44,6 @@ import { Head } from '@inertiajs/vue3';
                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
   <button type="button" class="btn btn-primary" @click="editUser(user.id)">Редактировать</button>
 </td>
-                    
                   </tr>
                 </tbody>
               </table>
