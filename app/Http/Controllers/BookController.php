@@ -19,14 +19,17 @@ class BookController extends Controller
     {
         $books = Book::all();
         $qrcodes = Qrcode::all();
-        return Inertia::render('Dashboard', compact('books', 'qrcodes'));
+        $authors = Author::all();
+        $genre = Genre::all();
+        $genreBook= Genre_Book::all();
+        return Inertia::render('Dashboard', compact('books', 'qrcodes','authors','genreBook','genre'));
     }
 
 
-    public function show(Book $book, Qrcode $qrcode)
+    public function show(Book $book, Qrcode $qrcode,Genre_Book $genreBook,Genre  $genre,Author $author)
     {
 
-        return Inertia::render('Show', ['book' => $book, 'qrcode'=>$qrcode]);
+        return Inertia::render('Show', ['book' => $book, 'qrcode'=>$qrcode,'genreBook' => $genreBook, 'genre'=>$genre,'author'=>$author]);
     }
     public function reserve(Book $book)
     {
