@@ -29,7 +29,7 @@ class BookController extends Controller
     public function show(Book $book, Qrcode $qrcode,Genre_Book $genreBook,Genre  $genre,Author $author)
     {
 
-        return Inertia::render('Show', ['book' => $book, 'qrcode'=>$qrcode,'genreBook' => $genreBook, 'genre'=>$genre,'author'=>$author]);
+        return Inertia::render('Show',['book' => $book, 'qrcode'=>$qrcode,'genreBook' => $genreBook, 'genre'=>$genre,'author'=>$author]);
     }
     public function reserve(Book $book)
     {
