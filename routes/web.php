@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookEditController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Middleware\Employee;
 use Illuminate\Http\Request;
@@ -35,9 +36,14 @@ Route::middleware(['auth', 'verified', 'employee'])->group(function () {
 });
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::resource('role', AdminController::class)->only(['index', 'destroy']);
-
     Route::get('/role/edit/{id}', [AdminController::class, 'edit']);
     Route::put('/role/update/{id}', [AdminController::class, 'update']);
+});
+
+Route::middleware(['auth', 'verified', 'employee'])->group(function () {
+    Route::resource('editor', BookEditController::class)->only(['index', 'destroy']);
+    Route::get('/editor/edit/{id}', [BookEditController::class, 'edit']);
+    Route::put('/editor/update/{id}', [BookEditController::class, 'update']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

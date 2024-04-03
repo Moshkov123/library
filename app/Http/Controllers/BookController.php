@@ -70,11 +70,13 @@ class BookController extends Controller
             $author['surname'] = ucwords(strtolower($author['surname']));
             $author['patronymic'] = ucwords(strtolower($author['patronymic']));
             $author['author'] = $author['surname'] . '.' . mb_substr($author['name'], 0, 1, 'UTF-8') . '.' . mb_substr($author['patronymic'], 0, 1, 'UTF-8');
-            $foundAuthor = Author::where('author', $author['author'])->first(); 
-            if(!$foundAuthor){
-                Author::query()->create($author);
+            $foundAuthor = Author::where('author', $author['author'])->first();
+            if($foundAuthor) {
+                $auth = $foundAuthor->id;
+            } else {
+                $foundAuthor = Author::query()->create($author);
+                $auth = $foundAuthor->id;  
             }
-            $auth=$foundAuthor->id;
         }
 
         $foundBook = Book::where('title', $request->title)->where('author_id', $auth)->first();
@@ -91,8 +93,12 @@ class BookController extends Controller
             Qrcode::query()->create($book2Data);
             
         } else {
-            
-            $book = Book::where($bookData)->first();
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->store('photos', 'public');
+                $bookData2['photo'] = $photoPath;
+            }
+            $book = Book::where('title', $request->title)->first();
+           
             $book2Data = array_merge($bookData2, ['book_id' => $book->id, 'user_id' => 1, 'condition' => true, 'booking' => true]); // Добавление 'book_id' и 'qr' в данные для создания Qrcode
             Qrcode::query()->create($book2Data);
         }

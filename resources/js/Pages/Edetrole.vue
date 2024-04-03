@@ -4,7 +4,6 @@ import { Head } from '@inertiajs/vue3';
 
 </script>
 <template>
-
     <Head title="Edetrole" />
     <AuthenticatedLayout>
         <template #header>
