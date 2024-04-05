@@ -36,11 +36,13 @@ class AdminController extends Controller
     }
     public function update(Request $request){
         $user = User::find($request->id);
-     
+       
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role_id = $request->input('role_id'); // Explicitly set the role_id
+        $user->save();
     
-            $user->fill($request->only(['name', 'email', 'role_id']))->save();
-            return Inertia::location('/role');
+        return Inertia::location('/role');
     }
-    
     
 }

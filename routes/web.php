@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrcodeController;
 use App\Http\Middleware\Admin;
@@ -44,6 +45,11 @@ Route::middleware(['auth', 'verified', 'employee'])->group(function () {
     Route::resource('editor', BookEditController::class)->only(['index', 'destroy']);
     Route::get('/editor/edit/{id}', [BookEditController::class, 'edit']);
     Route::put('/editor/update/{id}', [BookEditController::class, 'update']);
+
+    Route::resource('collection/{id}', CollectionController::class)->only(['index']);
+    Route::delete('/qrcodes/{id}', [CollectionController::class, 'destroy'])->name('qrcodes.destroy');
+    Route::get('/collection/edit/{id}', [CollectionController::class, 'edit']);
+    Route::put('/collection/update/{id}', [CollectionController::class, 'update']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

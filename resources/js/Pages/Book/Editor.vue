@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 </script>
 <template>
+
   <Head title="Editor" />
   <AuthenticatedLayout>
     <template #header>
@@ -10,7 +11,7 @@ import { Head } from '@inertiajs/vue3';
     </template>
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div >
           <div>
             <h2>Book Table</h2>
             <div class="overflow-x-auto">
@@ -29,30 +30,44 @@ import { Head } from '@inertiajs/vue3';
                     <th
                       class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                       age</th>
-                      <th
+                    <th
                       class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                       annotation</th>
-                      <th
+                    <th
                       class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                       quantity</th>
+                    <th
+                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                      Удалить</th>
+                    <th
+                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                      Редактировать</th>
+                    <th
+                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                      Редактировать колекцию</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for=" book in  books" :key=" book.id" >
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{  book.id }}</td>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200" v-for="author in authors" :key="author.id"> 
-                        <span v-if="author.id === book.author_id">{{ author.author }}</span>
+                  <tr v-for=" book in  books" :key="book.id">
+                    <td >{{ book.id }}</td>
+                    <td  v-for="author in authors"
+                      :key="author.id">
+                      <p v-if="author.id === book.author_id">{{ author.author }}</p>
                     </td>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ book.title }}</td>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ book.age }}</td>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ book.annotation }}</td>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ book.quantity }}</td>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"> <button type="button"
+                    <td >{{ book.title }}</td>
+                    <td >{{ book.age }}</td>
+                    <td >{{ book.annotation }}</td>
+                    <td >{{ book.quantity }}</td>
+                    <td > <button type="button"
                         class="btn btn-danger" @click="deleteBook(book.id)"> Удалить</button>
                     </td>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-  <button type="button" class="btn btn-primary" @click="editBook(book.id)">Редактировать</button>
-</td>
+                    <td >
+                      <button type="button" class="btn btn-primary" @click="editBook(book.id)">Редактировать</button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary" @click="editcollection(book.id)">Редактировать
+                        колекцию</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -75,6 +90,9 @@ export default defineComponent({
   methods: {
     editBook(id) {
       Inertia.visit(`/editor/edit/${id}`);
+    },
+    editcollection(id) {
+      Inertia.visit(`/collection/${id}`);
     },
     deleteBook(id) {
       Inertia.delete(`/editor/${id}`);
