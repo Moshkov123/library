@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
 
-class BookController extends Controller
+class BookController extends BaseController
 {
     public function index()
     {

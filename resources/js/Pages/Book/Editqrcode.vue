@@ -62,11 +62,14 @@ export default defineComponent({
   },
   methods: {
     async deleteBook(id) {
-      // Make a DELETE request to the specified route
       await Inertia.delete(route('qrcodes.destroy', { id }));
       // Fetch updated data after deletion
       await Inertia.get(`/collection/${book.id}`);
     },
+    async editBook(id){
+      
+      await Inertia.get(`/collection/edit/${id}`);
+    }
   },
 });
 </script>
