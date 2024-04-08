@@ -43,11 +43,9 @@ class CollectionController extends BaseController
         $this->service->deleteFile($qrcode->id);
 
         $photoPath = $this->service->downloadFile($request);
-        
         if ($photoPath) {
             $qrcode['photo']  = $photoPath;
         }
-
         $qrcode->fill($request->only(['publish', 'book_id', 'qr', 'year', 'ISBN', 'condition', 'booking', 'user_id']))->save();
         return Inertia::location('/collection/' . $qrcode->book_id);
     }
