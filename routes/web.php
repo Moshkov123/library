@@ -55,7 +55,7 @@ Route::middleware(['auth', 'verified', 'employee'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
     Route::resource('books', BookController::class)->only(['index', 'show']);
-    Route::post('books/{book}/reserve', [BookController::class, 'reserve'])->name('books.reserve');
+    Route::post('books/{qrcode}/reserve', [BookController::class, 'reserve'])->name('books.reserve');
 });
 
 Route::middleware('auth')->group(function () {

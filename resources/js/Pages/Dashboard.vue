@@ -3,14 +3,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 
-const hasQrcode = (qrcodes, bookId) => {
-  return qrcodes.some((qrcode) => qrcode.book_id === bookId);
-};
 
-const getQrcode = (qrcodes, bookId) => {
-  return qrcodes.find((qrcode) => qrcode.book_id === bookId);
-};
 </script>
+
 <template>
   <Head title="Dashboard" />
   <AuthenticatedLayout>
@@ -20,17 +15,17 @@ const getQrcode = (qrcodes, bookId) => {
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div>
-            <h2>Books</h2>
-            <div class="card-group">
-              <div v-for="book in books" :key="book.id" class="card">
-                <div class="card-body">
-                  <Link :href="`/books/${book.id}`" class="card mb-3">
-                    <h5 class="card-title">{{ book.title }}</h5>
-                  </Link>
-                  <p class="card-text">by {{ book.author }}</p>
-                  <img v-if="hasQrcode(qrcodes, book.id)" :src="`/storage/${getQrcode(qrcodes, book.id).photo}`" />
-                </div>
+          <h2>Books</h2>
+          <div class="card-group">
+            <div v-for="book in books" :key="book.id" class="card">
+              <div class="card-body" v-for="qrcode in qrcodes" :key="qrcode.id">
+                  <div v-if="qrcode.book_id === book.id">
+                    <Link :href="`/books/${qrcode.id}`" class="card mb-3">
+                      <h5 class="card-title">{{ book.title }}</h5>
+                    </Link>
+                    <p class="card-text">by {{ book.author }}</p>
+                    <img :src="`/storage/${qrcode.photo}`" />
+                  </div>
               </div>
             </div>
           </div>
@@ -39,9 +34,6 @@ const getQrcode = (qrcodes, bookId) => {
     </div>
   </AuthenticatedLayout>
 </template>
-
-
-
 
 <script>
 import { defineComponent } from 'vue';

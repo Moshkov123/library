@@ -25,7 +25,7 @@
    },
    methods: {
 	 reserveBook() {
-	   Inertia.post(`/books/${this.book.id}/reserve`);
+	   Inertia.post(`/books/${this.qrcode.id}/reserve`);
 	 },
    },
  });

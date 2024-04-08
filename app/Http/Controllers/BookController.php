@@ -26,28 +26,21 @@ class BookController extends BaseController
     }
 
 
-    public function show(Book $book, Qrcode $qrcode,Genre_Book $genreBook,Genre  $genre,Author $author)
+    public function show($id)
     {
-
-        return Inertia::render('Show',['book' => $book, 'qrcode'=>$qrcode,'genreBook' => $genreBook, 'genre'=>$genre,'author'=>$author]);
+        $qrcode = Qrcode::where('id', $id)->first();
+        $book= Book::where('id', $qrcode->book_id)->first();
+        return Inertia::render('Show',['book' => $book, 'qrcode'=>$qrcode]);
     }
     public function reserve(Book $book)
     {
         $userId = Auth::id();
-        
-        // Retrieve the qrcode associated with the given book
         $qrcode = Qrcode::where('book_id', $book->id)->first();
-    
         if ($qrcode) {
-            // Update the retrieved qrcode entry for the booked book
             $qrcode->update([
                 'booking' => false, // Set booking to false
                 'user_id' => $userId, // Update user_id to the current user's ID
             ]);
-    
-            // Additional logic if needed
-    
-           
         } 
         return redirect()->back()->with('success', 'Book reserved successfully.');
     }
