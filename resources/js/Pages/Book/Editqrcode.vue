@@ -35,7 +35,7 @@ import { Head } from '@inertiajs/vue3';
                 <td>{{ qrcode.publish }}</td>
                 <td>{{ qrcode.ISBN }}</td>
                 <td>{{ qrcode.condition ? 'В наличи' : 'На руках' }}</td>
-                <td>{{ qrcode.booking ? 'За бранированно' : 'Свобоно' }}</td>
+                <td>{{ qrcode.booking ? 'Свобоно' : 'За бранированно' }}</td>
                 <td>{{ qrcode.user_id }}</td>
                 <td>
                    <button type="button" class="btn btn-danger" @click="deleteBook(qrcode.id)">Удалить</button>

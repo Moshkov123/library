@@ -73,13 +73,28 @@ export default defineComponent({
     handleFileChange(event) {
       const file = event.target.files[0];
       this.qrcode.photo = file; // Обновляем свойство qrcode.photo новым файлом
+      console.log(this.qrcode.photo)
     },
     updatebook(bookId) {
+  const formData = new FormData();
+  formData.append('photo', this.qrcode.photo);
+  formData.append('year', this.qrcode.year);
+  formData.append('publish', this.qrcode.publish);
+  formData.append('ISBN', this.qrcode.ISBN);
+  formData.append('condition', this.qrcode.condition);
+  formData.append('booking', this.qrcode.booking);
+  formData.append('user_id', this.qrcode.user_id);
+  formData.append('_method', 'PUT'); // Добавляем это поле, чтобы симулировать PUT запрос
 
-
-      // Отправляем данные с использованием метода put Inertia.js
-      Inertia.put(`/collection/update/${bookId}`, formData);
-    },
+  Inertia.post(`/collection/update/${bookId}`, formData, {
+    onBefore: () => {
+      if (!this.qrcode.photo) {
+        alert('Пожалуйста, выберите фотографию.');
+        return false;
+      }
+    }
+  });
+},
   },
 });
 </script>

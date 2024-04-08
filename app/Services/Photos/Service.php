@@ -1,13 +1,15 @@
-<?php 
+<?php
 
 namespace App\Services\Photos;
+
 use Illuminate\Http\Request;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
 use App\Models\Qrcode;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+
 class Service
 {
     public function deleteFile($id)
@@ -20,7 +22,7 @@ class Service
     public function downloadFile(Request $request)
 {
     if ($request->hasFile('photo')) {
-        $photoPath = $request->file('photo')->store('public/photos');
+        $photoPath = $request->file('photo')->store('photos', 'public');
         return $photoPath;
     }
     return null;
