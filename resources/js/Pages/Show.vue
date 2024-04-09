@@ -7,7 +7,8 @@
 			  <h5 class="card-title">{{ book.title }}</h5>
 			  <p class="card-text">{{ qrcode.ISBN }}</p>
 			  <p class="card-text">{{ book.annotation }}</p>
-			  <button @click="reserveBook">Reserve</button>
+			  <img :src="`/storage/${qrcode.photo}`" />
+			  <button @click="reserveBook">{{ qrcode.booking ? 'За бранировать' : 'Занято' }}</button>
 			</div>
 		  </div>
 		</div>

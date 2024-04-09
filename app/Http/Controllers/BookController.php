@@ -34,16 +34,26 @@ class BookController extends BaseController
     }
     public function reserve(Book $book)
     {
+      
         $userId = Auth::id();
         $qrcode = Qrcode::where('book_id', $book->id)->first();
         if ($qrcode) {
+            if($qrcode->booking=== 0 && $userId==$qrcode->user_id){
+                $qrcode->update([
+                    'booking' => true,
+                    'user_id' => 1,
+                ]);
+            }else{
             $qrcode->update([
-                'booking' => false, // Set booking to false
-                'user_id' => $userId, // Update user_id to the current user's ID
+                'booking' => false,
+                'user_id' => $userId,
             ]);
+            }
+            
         } 
-        return redirect()->back()->with('success', 'Book reserved successfully.');
+        return redirect()->back();
     }
+    
     
     public function create()
     {
