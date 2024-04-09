@@ -1,32 +1,17 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
 
 </script>
 <template>
-  <Head title="Scanner" />
-  <AuthenticatedLayout>
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+
           <div>
             <h2>scanner</h2>
             <div class="bg-gray-50 px-8">
-    <p>{{ error }}</p>
-    <p>{{ decodedString }}</p>
-    <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
-  </div>
-  
-
+              <p>{{ error }}</p>
+              <p>{{ decodedString }}</p>
+              <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </AuthenticatedLayout>
 </template>
-
-
-
 <script>
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue3-qrcode-reader';
 
@@ -65,10 +50,9 @@ export default {
         // скрыть индикатор загрузки
       }
     },
-    onDecode(decodedString){
-      this.decodedString =decodedString;
+    onDecode(decodedString) {
+      this.decodedString = decodedString;
     }
   }
 }
 </script>
-
