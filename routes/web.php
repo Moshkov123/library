@@ -25,8 +25,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified', 'employee'])->group(function () {
-    Route::resource('scanner', ScannerController::class)
-        ->only(['index']);
+    Route::resource('scanner', ScannerController::class);
+    Route::get('/scanner/{ISBN}', [ScannerController::class, 'show']);
 
     Route::resource('qrcode', QrcodeController::class)
         ->only(['index']);

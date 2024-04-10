@@ -32,25 +32,24 @@ class BookController extends BaseController
         $book= Book::where('id', $qrcode->book_id)->first();
         return Inertia::render('Show',['book' => $book, 'qrcode'=>$qrcode]);
     }
-    public function reserve(Book $book)
+    public function reserve($id)
     {
-      
+        
         $userId = Auth::id();
-        $qrcode = Qrcode::where('book_id', $book->id)->first();
+        $qrcode = Qrcode::where('id', $id)->first();
         if ($qrcode) {
-            if($qrcode->booking=== 0 && $userId==$qrcode->user_id){
+            if ($qrcode->booking === 0 && $userId == $qrcode->user_id) {
                 $qrcode->update([
                     'booking' => true,
                     'user_id' => 1,
                 ]);
-            }else{
-            $qrcode->update([
-                'booking' => false,
-                'user_id' => $userId,
-            ]);
+            } else if ($qrcode->booking === 1) {
+                $qrcode->update([
+                    'booking' => false,
+                    'user_id' => $userId,
+                ]);
             }
-            
-        } 
+        }
         return redirect()->back();
     }
     
