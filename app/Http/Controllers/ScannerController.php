@@ -19,7 +19,7 @@ class ScannerController extends Controller
 {
     $qrcode = Qrcode::where('ISBN', $ISBN)->first();
     $book = Book::where('id', $qrcode->book_id)->first();
-    return Inertia::render('Employee/Issue', ['book' => $book, 'qrcode' => $qrcode]);
+    return Inertia::render('Employee/Lssue', ['book' => $book, 'qrcode' => $qrcode]);
 }
 
 }
