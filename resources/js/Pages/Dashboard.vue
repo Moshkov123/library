@@ -26,7 +26,7 @@ const getQrcode = (qrcodes, bookId) => {
               <div v-for="book in books" :key="book.id" class="card">
                 <div class="card-body">
                   <Link :href="`/books/${book.id}`" class="card mb-3">
-                    <h5 class="card-title">{{ book.title }}</h5>
+                    <h5 class="card-title underline text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" >{{ book.title }}</h5>
                   </Link>
                   
                   <p v-for="author in authors" :is="author.id">
@@ -73,5 +73,8 @@ export default defineComponent({
   flex-direction: column-reverse;
     justify-content: space-around;
 
+}
+.card-title{
+  font-size: x-large;
 }
 </style>
