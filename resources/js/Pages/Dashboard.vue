@@ -28,7 +28,9 @@ const getQrcode = (qrcodes, bookId) => {
                   <Link :href="`/books/${book.id}`" class="card mb-3">
                     <h5 class="card-title">{{ book.title }}</h5>
                   </Link>
-                  <p class="card-text">by {{ book.author }}</p>
+                  
+                  <p v-for="author in authors" :is="author.id">
+                    <p v-if="author.id == book.author_id" class="card-text">by {{ author.name }}</p></p>
                   <img v-if="hasQrcode(qrcodes, book.id)" :src="`/storage/${getQrcode(qrcodes, book.id).photo}`" />
                 </div>
               </div>
@@ -39,10 +41,6 @@ const getQrcode = (qrcodes, bookId) => {
     </div>
   </AuthenticatedLayout>
 </template>
-
-
-
-
 <script>
 import { defineComponent } from 'vue';
 import { Link } from '@inertiajs/vue3';
@@ -51,7 +49,29 @@ export default defineComponent({
   components: { Link },
   props: {
     books: Array,
+    authors: Array,
     qrcodes: Array,
   },
 });
 </script>
+<style>
+.card-group{
+  display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-end;
+    justify-content: center;
+}
+.card-body{
+  margin: 10px;
+  padding: 20px 10px;
+  width:250px;
+  display: flex;
+  background-color: lightblue;
+  border-radius: 25px;
+  flex-direction: column-reverse;
+    justify-content: space-around;
+
+}
+</style>
