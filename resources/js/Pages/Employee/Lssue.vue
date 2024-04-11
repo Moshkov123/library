@@ -8,8 +8,8 @@
 			  <p class="card-text">{{ qrcode.ISBN }}</p>
 			  <p class="card-text">{{ book.annotation }}</p>
 			  <img :src="`/storage/${qrcode.photo}`" />
-			  <button @click="">{{ qrcode.booking ? 'За бранировать' : 'Занято' }}</button>
-              <button @click="">{{ qrcode.condition ? 'Выдона' : 'В наличии' }}</button>
+			  <input type="text" v-model="userId" placeholder="Enter User ID">
+              <button @click="Issued()">{{ qrcode.condition ? 'Выдать' : 'Нет в наличии' }}</button>
 			</div>
 		  </div>
 		</div>
@@ -21,14 +21,19 @@
  import { Inertia } from '@inertiajs/inertia';
  
  export default defineComponent({
+	data() {
+    return {
+      userId: null
+    }
+  },
    props: {
 	 book: Object,
 	 qrcode: Object,
    },
    methods: {
-	 reserveBook() {
-	   Inertia.post(``);
-	 },
+	Issued() {
+		Inertia.put(route('issued', { id: this.qrcode.id, userId: this.userId })); 
+},
    },
  });
  </script>

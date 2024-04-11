@@ -14,6 +14,8 @@
 </template>
 <script>
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue3-qrcode-reader';
+import { defineComponent } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 
 export default {
   data() {
@@ -51,7 +53,8 @@ export default {
       }
     },
     onDecode(decodedString) {
-      this.decodedString = decodedString;
+      
+      Inertia.visit(`/scanner/${decodedString}`);
     }
   }
 }

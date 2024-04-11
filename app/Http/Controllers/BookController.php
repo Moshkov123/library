@@ -34,7 +34,6 @@ class BookController extends BaseController
     }
     public function reserve($id)
     {
-        
         $userId = Auth::id();
         $qrcode = Qrcode::where('id', $id)->first();
         if ($qrcode) {

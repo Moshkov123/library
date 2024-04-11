@@ -26,10 +26,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified', 'employee'])->group(function () {
     Route::resource('scanner', ScannerController::class);
+    Route::put('/scanner/issued/{id}', [ScannerController::class, 'issued'])->name('issued');
     Route::get('/scanner/{ISBN}', [ScannerController::class, 'show']);
 
-    Route::resource('qrcode', QrcodeController::class)
-        ->only(['index']);
+    Route::resource('qrcode', QrcodeController::class)->only(['index']);
 
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
     Route::resource('books', BookController::class)

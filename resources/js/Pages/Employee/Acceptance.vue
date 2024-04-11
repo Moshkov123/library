@@ -27,5 +27,6 @@ export default defineComponent({
   props: {
     qrcodes: Array,
   },
+ 
 });
 </script>
