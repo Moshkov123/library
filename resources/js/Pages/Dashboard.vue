@@ -28,9 +28,7 @@ const getQrcode = (qrcodes, bookId) => {
                   <Link :href="`/books/${book.id}`" class="card mb-3">
                     <h5 class="card-title underline text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" >{{ book.title }}</h5>
                   </Link>
-                  
-                  <p v-for="author in authors" :is="author.id">
-                    <p v-if="author.id == book.author_id" class="card-text">by {{ author.name }}</p></p>
+                    <p >by {{ authors.find((author)=> author.id === book.author_id).name }}</p>
                   <img v-if="hasQrcode(qrcodes, book.id)" :src="`/storage/${getQrcode(qrcodes, book.id).photo}`" />
                 </div>
               </div>
