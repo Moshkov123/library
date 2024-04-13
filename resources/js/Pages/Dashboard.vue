@@ -12,23 +12,26 @@ const getQrcode = (qrcodes, bookId) => {
 };
 </script>
 <template>
-  <Head title="Dashboard" />
+  <Head title="Книги" />
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Книги</h2>
     </template>
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="menu">
+          <div class="sort">
+            <SecondaryButton v-on:click="sortedbyname()">Сортировка по названию</SecondaryButton>
+            <SecondaryButton v-on:click="sortedbyauthorname()">Сортировка по автору</SecondaryButton>
+          </div>
           <div>
-            <h2>Books</h2>
             <div class="card-group">
               <div v-for="book in books" :key="book.id" class="card">
                 <div class="card-body">
                   <Link :href="`/books/${book.id}`" class="card mb-3">
                     <h5 class="card-title underline text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" >{{ book.title }}</h5>
                   </Link>
-                    <p >by {{ authors.find((author)=> author.id === book.author_id).author }}</p>
+                    <p >by {{ book.author_id }}</p>
                   <img v-if="hasQrcode(qrcodes, book.id)" :src="`/storage/${getQrcode(qrcodes, book.id).photo}`" />
                 </div>
               </div>
@@ -42,6 +45,7 @@ const getQrcode = (qrcodes, bookId) => {
 <script>
 import { defineComponent } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 
 export default defineComponent({
   components: { Link },
@@ -50,6 +54,42 @@ export default defineComponent({
     authors: Array,
     qrcodes: Array,
   },
+  mounted() {
+    this.$nextTick(function () {
+      this.books.forEach(book => {
+        book.author_id = this.authors.find((author)=> author.id === book.author_id).author
+     });
+    })
+  },
+  methods: {
+    sortedbyname(){
+    function compare(a, b) {
+      if (a.title < b.title)
+        return -1;
+      if (a.title > b.title)
+        return 1;
+      return 0;
+    }
+    return this.books.sort(compare);
+  },
+
+  
+  sortedbyauthorname(){
+    function compare(a, b) {
+      if (a.author_id < b.author_id)
+        return -1;
+      if (a.author_id > b.author_id)
+        return 1;
+      return 0;
+    }
+    return this.books.sort(compare);
+  }
+  },
+  data(){
+    return{
+      sortmethod:'sortedbyname()',
+    }
+  }
 });
 </script>
 <style>
@@ -64,7 +104,7 @@ export default defineComponent({
 .card-body{
   margin: 10px;
   padding: 20px 10px;
-  width:250px;
+  width:240px;
   display: flex;
   background-color: lightblue;
   border-radius: 25px;
@@ -74,5 +114,9 @@ export default defineComponent({
 }
 .card-title{
   font-size: x-large;
+}
+.menu{
+  display: grid;
+  grid-template-columns: 1fr 6fr;
 }
 </style>
