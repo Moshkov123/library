@@ -13,6 +13,7 @@ defineProps({
     },
     logPressed:{
         type: Boolean,
+        default: true,
     },
     regPressed:{
         type: Boolean,
@@ -33,7 +34,8 @@ defineProps({
                 <div class="flex-cd">
                     <p style="font-size: xx-large; ">Библиотека</p>
                     <div class="totheright">
-                        <PrimaryButton v-on:click="regPressed=true;logPressed=false">войти!!</PrimaryButton>
+                        <PrimaryButton v-on:click="regPressed=false;logPressed=true">Логин</PrimaryButton>
+                        <PrimaryButton v-on:click="regPressed=true;logPressed=false">Регистрация</PrimaryButton>
                     </div>
                 </div>
                 <div class="flex-cd">
@@ -63,6 +65,5 @@ defineProps({
 .totheright{
     position: absolute;
     right: 0px;
-
 }
 </style>
