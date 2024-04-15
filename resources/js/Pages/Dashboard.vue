@@ -12,6 +12,7 @@ const getQrcode = (qrcodes, bookId) => {
 };
 </script>
 <template>
+
   <Head title="Книги" />
   <AuthenticatedLayout>
     <template #header>
@@ -25,14 +26,25 @@ const getQrcode = (qrcodes, bookId) => {
             <SecondaryButton v-on:click="sortedbyauthorname()">Сортировка по автору</SecondaryButton>
           </div>
           <div>
-            <div class="card-group">
-              <div v-for="book in books" :key="book.id" class="card">
-                <div class="card-body">
-                  <Link :href="`/books/${book.id}`" class="card mb-3">
-                    <h5 class="card-title underline text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" >{{ book.title }}</h5>
-                  </Link>
-                    <p >by {{ book.author_id }}</p>
-                  <img v-if="hasQrcode(qrcodes, book.id)" :src="`/storage/${getQrcode(qrcodes, book.id).photo}`" />
+            <div class="flex-container">
+  <div class="book" v-for="book in books" :key="book.id">
+                <div class="flex" v-for="qrcode in qrcodes" :key="qrcode.id">
+                  <div  v-if="qrcode.book_id === book.id" class=" p-6">
+                    <div class="p-4 shadow border border-stone-200">
+                      <img class="shadow" v-if="hasQrcode(qrcodes, book.id)"
+                      :src="`/storage/${getQrcode(qrcodes, book.id).photo}`"
+                      :style="{ width: '250px', height: '370px' }" />
+                    <div class="text-center text-indigo-900 text-[22px] font-semibold font-['Inter'] capitalize">{{
+                      book.title }}</div>
+                    <div class="text-center text-zinc-500 text-sm font-normal font-['Inter'] capitalize tracking-tight">
+                      Автор {{ book.author_id }}</div>
+                    <Link 
+                      :href="`/books/${qrcode.id}`"> 
+                      <div class="text-center text-red-500 text-lg font-bold font-['Inter'] capitalize tracking-tight">Подробние</div>
+                    </Link>
+                    </div>
+                    
+                  </div>
                 </div>
               </div>
             </div>
@@ -40,6 +52,8 @@ const getQrcode = (qrcodes, bookId) => {
         </div>
       </div>
     </div>
+    
+
   </AuthenticatedLayout>
 </template>
 <script>
@@ -57,63 +71,48 @@ export default defineComponent({
   mounted() {
     this.$nextTick(function () {
       this.books.forEach(book => {
-        book.author_id = this.authors.find((author)=> author.id === book.author_id).author
-     });
+        book.author_id = this.authors.find((author) => author.id === book.author_id).author
+      });
     })
   },
   methods: {
-    sortedbyname(){
-    function compare(a, b) {
-      if (a.title < b.title)
-        return -1;
-      if (a.title > b.title)
-        return 1;
-      return 0;
+    sortedbyname() {
+      function compare(a, b) {
+        if (a.title < b.title)
+          return -1;
+        if (a.title > b.title)
+          return 1;
+        return 0;
+      }
+      return this.books.sort(compare);
+    },
+    sortedbyauthorname() {
+      function compare(a, b) {
+        if (a.author_id < b.author_id)
+          return -1;
+        if (a.author_id > b.author_id)
+          return 1;
+        return 0;
+      }
+      return this.books.sort(compare);
     }
-    return this.books.sort(compare);
   },
-
-  
-  sortedbyauthorname(){
-    function compare(a, b) {
-      if (a.author_id < b.author_id)
-        return -1;
-      if (a.author_id > b.author_id)
-        return 1;
-      return 0;
-    }
-    return this.books.sort(compare);
-  }
-  },
-  data(){
-    return{
-      sortmethod:'sortedbyname()',
+  data() {
+    return {
+      sortmethod: 'sortedbyname()',
     }
   }
 });
 </script>
 <style>
-.card-group{
+.flex-container {
   display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: flex-end;
-    justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Измените по желанию */
 }
-.card-body{
-  margin: 10px;
-  padding: 20px 10px;
-  width:240px;
-  display: flex;
-  background-color: lightblue;
-  border-radius: 25px;
-  flex-direction: column-reverse;
-    justify-content: space-around;
 
-}
-.card-title{
-  font-size: x-large;
+.book {
+ display: flex;
 }
 .menu{
   display: grid;
