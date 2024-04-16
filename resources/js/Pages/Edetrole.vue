@@ -19,9 +19,7 @@ import { Head } from '@inertiajs/vue3';
                             <table class="min-w-full">
                                 <thead>
                                     <tr>
-                                        <th
-                                            class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            ID</th>
+                                        <th>ID</th>
                                         <th
                                             class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             Name</th>

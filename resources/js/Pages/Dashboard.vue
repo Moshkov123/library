@@ -2,14 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
-
-const hasQrcode = (qrcodes, bookId) => {
-  return qrcodes.some((qrcode) => qrcode.book_id === bookId);
-};
-
-const getQrcode = (qrcodes, bookId) => {
-  return qrcodes.find((qrcode) => qrcode.book_id === bookId);
-};
 </script>
 <template>
 
@@ -27,23 +19,22 @@ const getQrcode = (qrcodes, bookId) => {
           </div>
           <div>
             <div class="flex-container">
-  <div class="book" v-for="book in books" :key="book.id">
-                <div class="flex" v-for="qrcode in qrcodes" :key="qrcode.id">
-                  <div  v-if="qrcode.book_id === book.id" class=" p-6">
+              <div v-for="book in books" :key="book.id">
+                <div v-for="qrcode in qrcodes" :key="qrcode.id">
+                  <div v-if="qrcode.book_id === book.id && qrcode.booking ==1 && qrcode.condition ==1" class="book p-6">
                     <div class="p-4 shadow border border-stone-200">
-                      <img class="shadow" v-if="hasQrcode(qrcodes, book.id)"
-                      :src="`/storage/${getQrcode(qrcodes, book.id).photo}`"
-                      :style="{ width: '250px', height: '370px' }" />
-                    <div class="text-center text-indigo-900 text-[22px] font-semibold font-['Inter'] capitalize">{{
-                      book.title }}</div>
-                    <div class="text-center text-zinc-500 text-sm font-normal font-['Inter'] capitalize tracking-tight">
-                      Автор {{ book.author_id }}</div>
-                    <Link 
-                      :href="`/books/${qrcode.id}`"> 
-                      <div class="text-center text-red-500 text-lg font-bold font-['Inter'] capitalize tracking-tight">Подробние</div>
-                    </Link>
+                      <img class="shadow" :src="`/storage/${qrcode.photo}`"
+                        :style="{ width: '250px', height: '370px' }" />
+                      <div class="text-center text-indigo-900 text-[22px] font-semibold font-['Inter'] capitalize">{{
+                        book.title }}</div>
+                      <div
+                        class="text-center text-zinc-500 text-sm font-normal font-['Inter'] capitalize tracking-tight">
+                        Автор {{ book.author_id }}</div>
+                      <Link :href="`/books/${qrcode.id}`">
+                      <div class="text-center text-red-500 text-lg font-bold font-['Inter'] capitalize tracking-tight">
+                        Подробние</div>
+                      </Link>
                     </div>
-                    
                   </div>
                 </div>
               </div>
@@ -52,8 +43,6 @@ const getQrcode = (qrcodes, bookId) => {
         </div>
       </div>
     </div>
-    
-
   </AuthenticatedLayout>
 </template>
 <script>
@@ -108,13 +97,14 @@ export default defineComponent({
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; /* Измените по желанию */
+  justify-content: space-around;
+}
+.book {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.book {
- display: flex;
-}
-.menu{
+.menu {
   display: grid;
   grid-template-columns: 1fr 6fr;
 }

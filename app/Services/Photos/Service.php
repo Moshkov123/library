@@ -21,6 +21,7 @@ class Service
     }
     public function downloadFile(Request $request)
 {
+  
     if ($request->hasFile('photo')) {
         $photoPath = $request->file('photo')->store('photos', 'public');
         return $photoPath;

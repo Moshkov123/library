@@ -27,7 +27,12 @@ export default {
     QrcodeDropZone,
     QrcodeCapture
   },
-  methods: {
+  methods: 
+  {
+    onDecode(ISBN) {
+    this.decodedString = ISBN;
+    this.$inertia.visit(`/scanner/${ISBN}`);
+  },
     async onInit(promise) {
       try {
         const capabilities = await promise;
@@ -50,9 +55,7 @@ export default {
         // скрыть индикатор загрузки
       }
     },
-    onDecode(decodedString) {
-      this.decodedString = decodedString;
-    }
+    
   }
 }
 </script>

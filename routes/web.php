@@ -15,7 +15,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\Employee;
 use Illuminate\Http\Request;
 
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

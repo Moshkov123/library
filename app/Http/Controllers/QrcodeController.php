@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Qrcode;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ class QrcodeController extends Controller
     {
         $books=Book::all();
         $qrcodes = Qrcode::all();
-        return Inertia::render('Employee/Qrcode',['qrcodes'=>$qrcodes,'books'=>  $books]);
+        $authors = Author::all();
+        return Inertia::render('Employee/Qrcode', compact('qrcodes','books','authors'));
     }
 }

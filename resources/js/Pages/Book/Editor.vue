@@ -18,53 +18,43 @@ import { Head } from '@inertiajs/vue3';
               <table class="min-w-full">
                 <thead>
                   <tr>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       ID</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       author</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       Название</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       age</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       annotation</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       quantity</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       Удалить</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       Редактировать</th>
-                    <th
-                      class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    <th>
                       Редактировать колекцию</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for=" book in  books" :key="book.id">
-                    <td >{{ book.id }}</td>
-                    <td  v-for="author in authors"
-                      :key="author.id">
-                      <p v-if="author.id === book.author_id">{{ author.author }}</p>
+                    <td class="p-4">{{ book.id }}</td>
+                    <td  class="p-4">
+                      {{  book.author_id }}
                     </td>
-                    <td >{{ book.title }}</td>
-                    <td >{{ book.age }}</td>
-                    <td >{{ book.annotation }}</td>
-                    <td >{{ book.quantity }}</td>
-                    <td > <button type="button"
+                    <td  class="p-4">{{ book.title }}</td>
+                    <td  class="p-4">{{ book.age }}</td>
+                    <td  class="p-4">{{ book.annotation }}</td>
+                    <td  class="p-4">{{ book.quantity }}</td>
+                    <td  class="p-4"> <button type="button"
                         class="btn btn-danger" @click="deleteBook(book.id)"> Удалить</button>
                     </td>
-                    <td >
+                    <td class="p-4">
                       <button type="button" class="btn btn-primary" @click="editBook(book.id)">Редактировать</button>
                     </td>
-                    <td>
+                    <td class="p-4">
                       <button type="button" class="btn btn-primary" @click="editcollection(book.id)">Редактировать
                         колекцию</button>
                     </td>
@@ -87,6 +77,13 @@ export default defineComponent({
     qrcodes: Array,
     authors: Array
   },
+  mounted() {
+    this.$nextTick(function () {
+      this.books.forEach(book => {
+        book.author_id = this.authors.find((author) => author.id === book.author_id).author
+      });
+    })
+  },
   methods: {
     editBook(id) {
       Inertia.visit(`/editor/edit/${id}`);
@@ -101,3 +98,15 @@ export default defineComponent({
   }
 });
 </script>
+
+<style>
+  .min-w-full {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .min-w-full th,
+  .min-w-full td {
+    border: 1px solid #dee2e6;
+    
+  }
+</style>

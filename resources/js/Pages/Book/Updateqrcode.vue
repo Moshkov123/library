@@ -18,21 +18,21 @@ import { Head } from '@inertiajs/vue3';
                 <th>Booking</th>
                 <th>User ID</th>
                 <th>обновить</th>
-              </tr>
+            </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="px-6 py-4">
+      <td class="p-4">
         {{qrcode.id}}
       </td>
-  <td class="px-6 py-4">
+  <td class="p-4">
     <input v-model="qrcode.year" type="text">
   </td>
-  <td class="px-6 py-4">
+  <td class="p-4">
     <label for="photo" class="form-label">Фотография</label>
     <input type="file" class="form-control" id="photo" name="photo" @change="handleFileChange">
 </td>
-  <td class="px-6 py-4">  
+  <td class="p-4">  
     <input v-model="qrcode.publish" type="text">
   </td>
 
@@ -98,3 +98,14 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+  .min-w-full {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .min-w-full th,
+  .min-w-full td {
+    border: 1px solid #dee2e6;
+    
+  }
+</style>

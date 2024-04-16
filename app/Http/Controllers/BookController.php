@@ -92,7 +92,7 @@ class BookController extends BaseController
             $book = Book::query()->create($bookData);
 
             $book2Data = array_merge($bookData2, ['book_id' => $book->id, 'user_id' => 1, 'condition' => true, 'booking' => true]); // Добавление 'book_id' и 'qr' в данные для создания Qrcode
-            Qrcode::query()->create($book2Data);
+            $qrcode=Qrcode::query()->create($book2Data);
             
         } else {
             if ($request->hasFile('photo')) {
@@ -102,7 +102,7 @@ class BookController extends BaseController
             $book = Book::where('title', $request->title)->first();
            
             $book2Data = array_merge($bookData2, ['book_id' => $book->id, 'user_id' => 1, 'condition' => true, 'booking' => true]); // Добавление 'book_id' и 'qr' в данные для создания Qrcode
-            Qrcode::query()->create($book2Data);
+            $qrcode= Qrcode::query()->create($book2Data);
         }
         // Поиск жанра
         $Genre = Genre::where('genre', $genre)->first();
@@ -122,6 +122,6 @@ class BookController extends BaseController
             $photoPath = $request->file('photo')->store('photos', 'public');
             $bookData2['photo'] = $photoPath;
         }
-        return redirect()->route('books.show', $book);
+        return redirect()->route('books.show' , $qrcode);
     }
 }
