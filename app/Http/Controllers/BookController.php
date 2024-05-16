@@ -30,7 +30,11 @@ class BookController extends BaseController
     {
         $qrcode = Qrcode::where('id', $id)->first();
         $book= Book::where('id', $qrcode->book_id)->first();
-        return Inertia::render('Show',['book' => $book, 'qrcode'=>$qrcode]);
+        
+        $author = Author::where('id', $book->author_id)->first();
+        $genre = Genre::all();
+        $genreBook= Genre_Book::all();
+        return Inertia::render('Show',compact('book', 'qrcode','author','genreBook','genre'));
     }
     public function reserve($id)
     {

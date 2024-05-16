@@ -27,6 +27,8 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified', 'employee'])->group(function () {
     Route::get('scanner', [ScannerController::class, 'index'])->name('scanner');
     Route::get('/scanner/{ISBN}', [ScannerController::class, 'show']);
+    Route::post('/scanner/booking/{ISBN}', [ScannerController::class, 'bookingUpdate']);
+    Route::post('/scanner/сondition/{ISBN}', [ScannerController::class, 'сonditionUpdate']);
 
     Route::get('qrcode', [QrcodeController::class, 'index'])->name('qrcode');
     Route::redirect('/dashboard', '/books', 301)->name('dashboard');
